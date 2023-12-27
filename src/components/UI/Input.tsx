@@ -1,31 +1,30 @@
 import classes from "./Input.module.css";
 
-const Input = () => {
+interface Props {
+  title: string;
+  id: string;
+  value: number;
+  unit: string;
+  options: { value: number; title: string }[];
+}
+
+const Input = ({ title, id, value, unit, options }: Props) => {
   return (
     <div className={classes.wrapper}>
-      <label className={classes.label} htmlFor="input">
-        대출금액
+      <label className={classes.label} htmlFor={id}>
+        {title}
       </label>
       <div className={classes.box}>
-        <input id="input" className={classes.input} type="text" />
-        <span className={classes.unit}>원</span>
+        <input id={id} className={classes.input} type="text" value={value} />
+        <span className={classes.unit}>{unit}</span>
       </div>
 
-      <p className={classes.convert}>100,000원</p>
-
       <ul className={classes.options}>
-        <li className={classes.option}>
-          <button>초기화</button>
-        </li>
-        <li className={classes.option}>
-          <button>+100만</button>
-        </li>
-        <li className={classes.option}>
-          <button>+1000만</button>
-        </li>
-        <li className={classes.option}>
-          <button>+1억</button>
-        </li>
+        {options.map((option) => (
+          <li className={classes.option}>
+            <button>{option.title}</button>
+          </li>
+        ))}
       </ul>
     </div>
   );

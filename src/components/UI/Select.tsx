@@ -1,16 +1,22 @@
 import classes from "./Select.module.css";
 
-const Select = () => {
+interface Props {
+  title: string;
+  value: string;
+  options: string[];
+}
+
+const Select = ({ title, value, options }: Props) => {
   return (
     <div className={classes.wrapper}>
       <label className={classes.label} htmlFor="select">
-        상환방식
+        {title}
       </label>
       <div className={classes.box}>
-        <select id="select" className={classes.select}>
-          <option>원리금균등상환</option>
-          <option>원금균등상환</option>
-          <option>만기일시상환</option>
+        <select id="select" className={classes.select} value={value}>
+          {options.map((option) => (
+            <option>{option}</option>
+          ))}
         </select>
 
         <i className="fa-solid fa-angle-down"></i>
