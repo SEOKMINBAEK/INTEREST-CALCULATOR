@@ -1,0 +1,21 @@
+.result {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.wrapper {
+  padding: 40px 0 20px;
+}
+
+.point {
+  color: orangered;
+  font-size: 17px;
+  font-weight: 600;
+}
+
+.total {
+  text-align: right;
+  color: orangered;
+  font-weight: 600;
+  padding-right: 50px;
+}

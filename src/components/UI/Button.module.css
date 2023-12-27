@@ -1,0 +1,20 @@
+.wrapper {
+  padding-top: 40px;
+}
+
+.button {
+  width: 100%;
+  background: none;
+  /* border: 1px solid #606060; */
+  border: none;
+  background-color: orangered;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 600;
+  padding: 12px;
+  cursor: pointer;
+}
+
+.button:disabled {
+  background: #ccc;
+}

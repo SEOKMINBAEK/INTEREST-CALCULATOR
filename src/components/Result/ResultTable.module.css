@@ -1,0 +1,45 @@
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.thead {
+  border-bottom: 1px solid #ccc;
+  text-align: left;
+}
+
+.thead tr th {
+  padding-bottom: 8px;
+  font-weight: bold;
+}
+
+.tbody {
+}
+
+tr {
+  display: none;
+}
+
+.show {
+  display: table-row;
+}
+
+.point {
+  display: table-row;
+  background-color: rgba(255, 69, 0, 0.1);
+}
+
+.tbody tr td {
+  font-size: 15px;
+  padding: 4px 0 8px 4px;
+}
+
+.footer {
+  text-align: center;
+  color: #606060;
+  padding: 20px 0;
+}
+
+.footer i {
+  cursor: pointer;
+}
