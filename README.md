@@ -18,4 +18,6 @@ React와 TypeScript로 제작한 간단한 대출이자 계산기 입니다.
 React의 Context API를 사용하여 효율적으로 처리했습니다.  
 프로젝트의 상태를 중앙 집중화하여 구성 요소간 원활한 데이터 흐름을 제공하고 유지 관리 가능한 코드 구조를 보장하도록 하였습니다.
 
-## How to Run
+## Link
+
+https://interest-calculator-65fb6.web.app/
