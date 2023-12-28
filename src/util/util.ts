@@ -175,6 +175,36 @@ export const lumpSumRepayment = ({
     input: { repayWay, amount, yearlyInterest, repayTerm },
   };
 };
+// limited to less than 1 trillion won(₩)
+export const limitTwelveDigit = (value: number) => {
+  return /^(?:[0-9]\d{0,11})?$/.test(value + "");
+};
+
+// Limited to less than 100%
+export const limitTwoDecimal = (value: number) => {
+  return /^\d{0,2}(\.\d{0,2})?$/.test(value + "");
+};
+
+// Limited to less than 100 years
+export const limitTwoDigit = (value: number) => {
+  return /^(?:[0-9]\d{0,1})?$/.test(value + "");
+};
+
+export const validateInputValue = (value: number, id: string) => {
+  let isValid: boolean;
+
+  switch (id) {
+    case "amount":
+      isValid = limitTwelveDigit(value);
+      return isValid;
+    case "yearly-interest":
+      isValid = limitTwoDecimal(value);
+      return isValid;
+    default:
+      isValid = limitTwoDigit(value);
+      return isValid;
+  }
+};
 
 export const convertAveragePaymentToString = (
   repayWay: string,

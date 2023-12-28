@@ -1,3 +1,5 @@
+import { validateInputValue } from "../../util/util";
+
 import classes from "./Input.module.css";
 
 interface PropsShape {
@@ -12,7 +14,9 @@ interface PropsShape {
 const Input = ({ title, id, value, unit, options, onChange }: PropsShape) => {
   const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const formatToNumber = +e.target.value;
-    onChange(formatToNumber);
+    const isValid = validateInputValue(formatToNumber, id);
+
+    isValid && onChange(formatToNumber);
   };
 
   const onClickHandler = (optionValue: number) => {
