@@ -5,15 +5,15 @@ import classes from "./Input.module.css";
 interface PropsShape {
   title: string;
   id: string;
-  value: number;
+  value: string;
   unit: string;
   options: Array<{ value: number; title: string }>;
-  onChange: (value: number) => void;
+  onChange: (value: string) => void;
 }
 
 const Input = ({ title, id, value, unit, options, onChange }: PropsShape) => {
   const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const formatToNumber = +e.target.value;
+    const formatToNumber = e.target.value;
     const isValid = validateInputValue(formatToNumber, id);
 
     isValid && onChange(formatToNumber);
@@ -21,10 +21,10 @@ const Input = ({ title, id, value, unit, options, onChange }: PropsShape) => {
 
   const onClickHandler = (optionValue: number) => {
     if (optionValue === 0) {
-      onChange(0);
+      onChange("0");
     } else {
-      const newValue = value + optionValue;
-      onChange(newValue);
+      const newValue = +value + optionValue;
+      onChange(newValue + "");
     }
   };
 

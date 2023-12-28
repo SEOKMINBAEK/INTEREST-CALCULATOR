@@ -4,25 +4,25 @@ import { ResultDataShape } from "../util/util";
 
 interface ContextShape {
   repayWay: string;
-  amount: number;
-  yearlyInterest: number;
-  repayTerm: number;
+  amount: string;
+  yearlyInterest: string;
+  repayTerm: string;
   inputDataIsValid: boolean;
   resultData: ResultDataShape;
 
   changeRepayWay: (repayWay: string) => void;
-  changeAmount: (amount: number) => void;
-  changeYearlyInterest: (yearlyInterest: number) => void;
-  changeRepayTerm: (repayTerm: number) => void;
+  changeAmount: (amount: string) => void;
+  changeYearlyInterest: (yearlyInterest: string) => void;
+  changeRepayTerm: (repayTerm: string) => void;
 
   calculateInterest: () => void;
 }
 
 const CalculatorContext = createContext<ContextShape>({
   repayWay: "",
-  amount: 0,
-  yearlyInterest: 0,
-  repayTerm: 0,
+  amount: "",
+  yearlyInterest: "",
+  repayTerm: "",
   inputDataIsValid: false,
   resultData: {},
 

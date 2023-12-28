@@ -9,26 +9,26 @@ import {
 
 const useCalculator = () => {
   const [repayWay, setRepayWay] = useState("원리금균등상환");
-  const [amount, setAmount] = useState(1000000);
-  const [yearlyInterest, setYearlyInterest] = useState(4);
-  const [repayTerm, setRepayTerm] = useState(5);
+  const [amount, setAmount] = useState("");
+  const [yearlyInterest, setYearlyInterest] = useState("");
+  const [repayTerm, setRepayTerm] = useState("");
   const [resultData, setResultData] = useState({});
 
-  const inputDataIsValid = amount && yearlyInterest && repayTerm ? true : false;
+  const inputDataIsValid = +amount > 0 && +yearlyInterest > 0 && +repayTerm > 0;
 
   const changeRepayWay = (repayWay: string) => {
     setRepayWay(repayWay);
   };
 
-  const changeAmount = (amount: number) => {
+  const changeAmount = (amount: string) => {
     setAmount(amount);
   };
 
-  const changeYearlyInterest = (yearlyInterest: number) => {
+  const changeYearlyInterest = (yearlyInterest: string) => {
     setYearlyInterest(yearlyInterest);
   };
 
-  const changeRepayTerm = (repayTerm: number) => {
+  const changeRepayTerm = (repayTerm: string) => {
     setRepayTerm(repayTerm);
   };
 

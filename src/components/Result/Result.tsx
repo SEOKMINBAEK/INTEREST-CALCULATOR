@@ -35,7 +35,7 @@ const Result = () => {
         </p>
       </div>
 
-      <ResultTable schedule={schedule} repayTerm={input.repayTerm} />
+      <ResultTable schedule={schedule} repayTerm={+input.repayTerm} />
 
       <p className={classes.total}>총 이자액 1,000원</p>
     </div>

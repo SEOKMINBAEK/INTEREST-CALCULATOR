@@ -1,8 +1,8 @@
 export interface FormDataShape {
   repayWay: string;
-  amount: number;
-  yearlyInterest: number;
-  repayTerm: number;
+  amount: string | number;
+  yearlyInterest: string | number;
+  repayTerm: string | number;
 }
 
 export interface ScheduleItemShape {
@@ -33,9 +33,9 @@ export const equalPrincipalAndInterestRepayment = ({
   yearlyInterest,
   repayTerm,
 }: FormDataShape) => {
-  const P = amount;
-  const r = yearlyInterest / 12 / 100;
-  const n = repayTerm * 12;
+  const P = +amount;
+  const r = +yearlyInterest / 12 / 100;
+  const n = +repayTerm * 12;
 
   const PMT = (P * r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
 
@@ -84,9 +84,9 @@ export const equalPrincipalRepayment = ({
   yearlyInterest,
   repayTerm,
 }: FormDataShape) => {
-  const P = amount;
-  const r = yearlyInterest / 12 / 100;
-  const n = repayTerm * 12;
+  const P = +amount;
+  const r = +yearlyInterest / 12 / 100;
+  const n = +repayTerm * 12;
   const monthAmount = P / n;
 
   // monthly payment object
@@ -135,9 +135,9 @@ export const lumpSumRepayment = ({
   yearlyInterest,
   repayTerm,
 }: FormDataShape) => {
-  const P = amount;
-  const r = yearlyInterest / 12 / 100;
-  const n = repayTerm * 12;
+  const P = +amount;
+  const r = +yearlyInterest / 12 / 100;
+  const n = +repayTerm * 12;
 
   // monthly payment object
   const schedule: Array<ScheduleItemShape> = [];
@@ -176,21 +176,21 @@ export const lumpSumRepayment = ({
   };
 };
 // limited to less than 1 trillion won(₩)
-export const limitTwelveDigit = (value: number) => {
+export const limitTwelveDigit = (value: string) => {
   return /^(?:[0-9]\d{0,11})?$/.test(value + "");
 };
 
 // Limited to less than 100%
-export const limitTwoDecimal = (value: number) => {
+export const limitTwoDecimal = (value: string) => {
   return /^\d{0,2}(\.\d{0,2})?$/.test(value + "");
 };
 
 // Limited to less than 100 years
-export const limitTwoDigit = (value: number) => {
+export const limitTwoDigit = (value: string) => {
   return /^(?:[0-9]\d{0,1})?$/.test(value + "");
 };
 
-export const validateInputValue = (value: number, id: string) => {
+export const validateInputValue = (value: string, id: string) => {
   let isValid: boolean;
 
   switch (id) {
