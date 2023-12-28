@@ -11,6 +11,8 @@ interface ContextShape {
   changeAmount: (amount: number) => void;
   changeYearlyInterest: (yearlyInterest: number) => void;
   changeRepayTerm: (repayTerm: number) => void;
+
+  calculateInterest: () => void;
 }
 
 const CalculatorContext = createContext<ContextShape>({
@@ -24,6 +26,8 @@ const CalculatorContext = createContext<ContextShape>({
   changeAmount: () => {},
   changeYearlyInterest: () => {},
   changeRepayTerm: () => {},
+
+  calculateInterest: () => {},
 });
 
 export default CalculatorContext;

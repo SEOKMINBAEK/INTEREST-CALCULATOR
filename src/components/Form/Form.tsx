@@ -28,6 +28,7 @@ const Form = () => {
     changeAmount,
     changeYearlyInterest,
     changeRepayTerm,
+    calculateInterest,
   } = calcCtx;
 
   return (
@@ -62,7 +63,7 @@ const Form = () => {
         options={termBtnOptions}
         onChange={changeRepayTerm}
       />
-      <Button disabled={inputDataIsValid} />
+      <Button disabled={inputDataIsValid} onClick={calculateInterest} />
     </form>
   );
 };

@@ -1,5 +1,11 @@
 import { useState } from "react";
 
+import {
+  equalPrincipalAndInterestRepayment,
+  equalPrincipalRepayment,
+  lumpSumRepayment,
+} from "../util/util";
+
 const useCalculator = () => {
   const [repayWay, setRepayWay] = useState("원리금균등상환");
   const [amount, setAmount] = useState(1000000);
@@ -24,6 +30,29 @@ const useCalculator = () => {
     setRepayTerm(repayTerm);
   };
 
+  const calculateInterest = () => {
+    let result;
+    const paramsObj = {
+      repayWay,
+      amount,
+      yearlyInterest,
+      repayTerm,
+    };
+
+    switch (repayWay) {
+      case "원리금균등상환":
+        result = equalPrincipalAndInterestRepayment(paramsObj);
+        break;
+      case "원금균등상환":
+        result = equalPrincipalRepayment(paramsObj);
+        break;
+      case "만기일시상환":
+        result = lumpSumRepayment(paramsObj);
+    }
+
+    console.log(result);
+  };
+
   return {
     repayWay,
     amount,
@@ -34,6 +63,7 @@ const useCalculator = () => {
     changeAmount,
     changeYearlyInterest,
     changeRepayTerm,
+    calculateInterest,
   };
 };
 

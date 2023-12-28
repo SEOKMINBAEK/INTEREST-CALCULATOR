@@ -18,6 +18,7 @@ const CalculatorProvider = ({ children }: PropsShape) => {
     changeAmount,
     changeYearlyInterest,
     changeRepayTerm,
+    calculateInterest,
   } = useCalculator();
 
   const calculatorContext = {
@@ -30,6 +31,7 @@ const CalculatorProvider = ({ children }: PropsShape) => {
     changeAmount,
     changeYearlyInterest,
     changeRepayTerm,
+    calculateInterest,
   };
 
   return (
