@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 import {
+  ResultDataShape,
   equalPrincipalAndInterestRepayment,
   equalPrincipalRepayment,
   lumpSumRepayment,
@@ -11,6 +12,7 @@ const useCalculator = () => {
   const [amount, setAmount] = useState(1000000);
   const [yearlyInterest, setYearlyInterest] = useState(4);
   const [repayTerm, setRepayTerm] = useState(5);
+  const [resultData, setResultData] = useState({});
 
   const inputDataIsValid = amount && yearlyInterest && repayTerm ? true : false;
 
@@ -31,7 +33,7 @@ const useCalculator = () => {
   };
 
   const calculateInterest = () => {
-    let result;
+    let result: ResultDataShape;
     const paramsObj = {
       repayWay,
       amount,
@@ -46,11 +48,11 @@ const useCalculator = () => {
       case "원금균등상환":
         result = equalPrincipalRepayment(paramsObj);
         break;
-      case "만기일시상환":
+      default:
         result = lumpSumRepayment(paramsObj);
     }
-
     console.log(result);
+    setResultData(result);
   };
 
   return {
@@ -59,6 +61,7 @@ const useCalculator = () => {
     yearlyInterest,
     repayTerm,
     inputDataIsValid,
+    resultData,
     changeRepayWay,
     changeAmount,
     changeYearlyInterest,

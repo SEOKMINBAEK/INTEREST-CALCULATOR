@@ -3,7 +3,7 @@ import classes from "./Select.module.css";
 interface PropsShape {
   title: string;
   value: string;
-  options: string[];
+  options: Array<string>;
   onChange: (value: string) => void;
 }
 

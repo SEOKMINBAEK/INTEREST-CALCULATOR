@@ -1,6 +1,13 @@
+import { ScheduleItemShape } from "../../util/util";
+
 import classes from "./ResultTable.module.css";
 
-const ResultTable = () => {
+interface PropsShape {
+  schedule: Array<ScheduleItemShape>;
+  repayTerm: number;
+}
+
+const ResultTable = ({ schedule, repayTerm }: PropsShape) => {
   return (
     <>
       <table className={classes.table}>
@@ -15,41 +22,17 @@ const ResultTable = () => {
         </thead>
 
         <tbody className={classes.tbody}>
-          <tr className={classes.show}>
-            <td>1</td>
-            <td>1,000원</td>
-            <td>1,000원</td>
-            <td>1,000원</td>
-            <td>1,000원</td>
-          </tr>
-          <tr className={classes.show}>
-            <td>1</td>
-            <td>1,000원</td>
-            <td>1,000원</td>
-            <td>1,000원</td>
-            <td>1,000원</td>
-          </tr>
-          <tr className={classes.show}>
-            <td>1</td>
-            <td>1,000원</td>
-            <td>1,000원</td>
-            <td>1,000원</td>
-            <td>1,000원</td>
-          </tr>
-          <tr className={classes.show}>
-            <td>1</td>
-            <td>1,000원</td>
-            <td>1,000원</td>
-            <td>1,000원</td>
-            <td>1,000원</td>
-          </tr>
-          <tr className={classes.show}>
-            <td>1</td>
-            <td>1,000원</td>
-            <td>1,000원</td>
-            <td>1,000원</td>
-            <td>1,000원</td>
-          </tr>
+          {schedule.map((data) => {
+            return (
+              <tr key={data.month} className={classes.show}>
+                <td>{data.month}</td>
+                <td>{data.monthInterest}</td>
+                <td>{data.monthAmount}</td>
+                <td>{data.totalPayment}</td>
+                <td>{data.balance}</td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
       <div className={classes.footer}>

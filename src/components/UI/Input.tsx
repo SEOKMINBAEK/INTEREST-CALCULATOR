@@ -5,7 +5,7 @@ interface PropsShape {
   id: string;
   value: number;
   unit: string;
-  options: { value: number; title: string }[];
+  options: Array<{ value: number; title: string }>;
   onChange: (value: number) => void;
 }
 

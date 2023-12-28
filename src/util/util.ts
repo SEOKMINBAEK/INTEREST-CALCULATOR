@@ -1,8 +1,19 @@
-interface FormDataShape {
+export interface FormDataShape {
   repayWay: string;
   amount: number;
   yearlyInterest: number;
   repayTerm: number;
+}
+
+export interface ScheduleItemShape {
+  [key: string]: number;
+}
+
+export interface ResultDataShape {
+  schedule?: Array<ScheduleItemShape>;
+  totalInterest?: number;
+  averagePayment?: Array<number>;
+  input?: FormDataShape;
 }
 
 /**
@@ -29,7 +40,7 @@ export const equalPrincipalAndInterestRepayment = ({
   const PMT = (P * r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
 
   // monthly payment object
-  const schedule = [];
+  const schedule: Array<ScheduleItemShape> = [];
 
   let balance = P;
 
@@ -79,7 +90,7 @@ export const equalPrincipalRepayment = ({
   const monthAmount = P / n;
 
   // monthly payment object
-  const schedule = [];
+  const schedule: Array<ScheduleItemShape> = [];
 
   let balance = P;
   let totalInterest = 0;
@@ -129,7 +140,7 @@ export const lumpSumRepayment = ({
   const n = repayTerm * 12;
 
   // monthly payment object
-  const schedule = [];
+  const schedule: Array<ScheduleItemShape> = [];
 
   let balance = P;
   let totalInterest = 0;
@@ -163,4 +174,18 @@ export const lumpSumRepayment = ({
     averagePayment,
     input: { repayWay, amount, yearlyInterest, repayTerm },
   };
+};
+
+export const convertAveragePaymentToString = (
+  repayWay: string,
+  averagePayment: Array<number>
+) => {
+  switch (repayWay) {
+    case "원리금균등상환":
+      return ` 매월 ${averagePayment[0]}씩`;
+    case "원금균등상환":
+      return ` 첫달 ${averagePayment[0]}, 중간달 ${averagePayment[1]}, 마지막달 ${averagePayment[2]}을`;
+    default:
+      return ` 첫달 ${averagePayment[0]}, 마지막달 ${averagePayment[1]}을`;
+  }
 };
