@@ -177,7 +177,7 @@ export const lumpSumRepayment = ({
 };
 // limited to less than 1 trillion won(₩)
 export const limitTwelveDigit = (value: string) => {
-  return /^(?:[0-9]\d{0,11})?$/.test(value + "");
+  return /^(?:[1-9]\d{0,11})?$/.test(value + "");
 };
 
 // Limited to less than 100%
@@ -187,7 +187,7 @@ export const limitTwoDecimal = (value: string) => {
 
 // Limited to less than 100 years
 export const limitTwoDigit = (value: string) => {
-  return /^(?:[0-9]\d{0,1})?$/.test(value + "");
+  return /^(?:[1-9]\d{0,1})?$/.test(value + "");
 };
 
 export const validateInputValue = (value: string, id: string) => {
@@ -206,16 +206,73 @@ export const validateInputValue = (value: string, id: string) => {
   }
 };
 
+export const addComma = (value: string) => {
+  return value.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+};
+
+export const removeComma = (value: string) => {
+  return value.replace(/,/g, "");
+};
+
+export const convertKoreanUnit = (value: string | number) => {
+  const valueToString = value + "";
+
+  const valueToArray = Array.from(valueToString);
+
+  let digitThousand = valueToArray.splice(-4).join("");
+  let digitMillion = valueToArray.splice(-4).join("");
+  let digitBillion = valueToArray.splice(-4).join("");
+  let digitTrillion = valueToArray.splice(-4).join("");
+
+  const removeZero = (digit: string): string => {
+    return digit[0] === "0" ? removeZero(digit.slice(1)) : digit;
+  };
+
+  digitThousand = addComma(removeZero(digitThousand));
+  digitMillion = addComma(removeZero(digitMillion));
+  digitBillion = addComma(removeZero(digitBillion));
+  digitTrillion = addComma(removeZero(digitTrillion));
+
+  const units = ["", "만", "억", "조"];
+
+  if (digitThousand) {
+    digitThousand += units[0];
+  }
+
+  if (digitMillion) {
+    digitMillion += units[1];
+  }
+
+  if (digitBillion) {
+    digitBillion += units[2];
+  }
+
+  if (digitTrillion) {
+    digitTrillion += units[3];
+  }
+
+  const resultUnit =
+    digitTrillion + digitBillion + digitMillion + digitThousand || "0";
+
+  return resultUnit + "원";
+};
+
 export const convertAveragePaymentToString = (
   repayWay: string,
   averagePayment: Array<number>
 ) => {
   switch (repayWay) {
     case "원리금균등상환":
-      return ` 매월 ${averagePayment[0]}씩`;
+      return ` 매월 ${convertKoreanUnit(averagePayment[0])}씩`;
     case "원금균등상환":
-      return ` 첫달 ${averagePayment[0]}, 중간달 ${averagePayment[1]}, 마지막달 ${averagePayment[2]}을`;
+      return ` 첫달 ${convertKoreanUnit(
+        averagePayment[0]
+      )}, 중간달 ${convertKoreanUnit(
+        averagePayment[1]
+      )}, 마지막달 ${convertKoreanUnit(averagePayment[2])}을`;
     default:
-      return ` 첫달 ${averagePayment[0]}, 마지막달 ${averagePayment[1]}을`;
+      return ` 첫달 ${convertKoreanUnit(
+        averagePayment[0]
+      )}, 마지막달 ${convertKoreanUnit(averagePayment[1])}을`;
   }
 };

@@ -2,7 +2,10 @@ import { useContext } from "react";
 
 import ResultTable from "./ResultTable";
 import CalculatorContext from "../../store/calculator-context";
-import { convertAveragePaymentToString } from "../../util/util";
+import {
+  convertAveragePaymentToString,
+  convertKoreanUnit,
+} from "../../util/util";
 
 import classes from "./Result.module.css";
 
@@ -22,8 +25,10 @@ const Result = () => {
       <div className={classes.wrapper}>
         <h2>계산 결과</h2>
         <p>
-          <span className={classes.point}>{input.amount}</span>을{" "}
-          <span className={classes.point}>{input.repayTerm}년</span> 동안
+          <span className={classes.point}>
+            {convertKoreanUnit(input.amount)}
+          </span>
+          을 <span className={classes.point}>{input.repayTerm}년</span> 동안
           <br />
           <span className={classes.point}>{input.repayWay}</span>으로 대출을
           받았을때 <br />
@@ -37,7 +42,9 @@ const Result = () => {
 
       <ResultTable schedule={schedule} repayTerm={+input.repayTerm} />
 
-      <p className={classes.total}>총 이자액 1,000원</p>
+      <p className={classes.total}>
+        총 이자액 {convertKoreanUnit(totalInterest)}
+      </p>
     </div>
   );
 };

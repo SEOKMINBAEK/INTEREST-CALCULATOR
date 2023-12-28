@@ -1,4 +1,5 @@
-import { ScheduleItemShape } from "../../util/util";
+import { useState } from "react";
+import { ScheduleItemShape, convertKoreanUnit } from "../../util/util";
 
 import classes from "./ResultTable.module.css";
 
@@ -8,6 +9,16 @@ interface PropsShape {
 }
 
 const ResultTable = ({ schedule, repayTerm }: PropsShape) => {
+  const [moreView, setMoreView] = useState(false);
+
+  const moreViewClickHandler = () => {
+    setMoreView((prevState) => !prevState);
+  };
+
+  const isPointMonth = (month: number) => {
+    return month === 1 || !(month % repayTerm) || month - 1 === schedule.length;
+  };
+
   return (
     <>
       <table className={classes.table}>
@@ -24,19 +35,28 @@ const ResultTable = ({ schedule, repayTerm }: PropsShape) => {
         <tbody className={classes.tbody}>
           {schedule.map((data) => {
             return (
-              <tr key={data.month} className={classes.show}>
+              <tr
+                key={data.month}
+                className={[
+                  moreView && classes.show,
+                  isPointMonth(data.month) && classes.point,
+                ].join(" ")}
+              >
                 <td>{data.month}</td>
-                <td>{data.monthInterest}</td>
-                <td>{data.monthAmount}</td>
-                <td>{data.totalPayment}</td>
-                <td>{data.balance}</td>
+                <td>{convertKoreanUnit(data.monthInterest)}</td>
+                <td>{convertKoreanUnit(data.monthAmount)}</td>
+                <td>{convertKoreanUnit(data.totalPayment)}</td>
+                <td>{convertKoreanUnit(data.balance)}</td>
               </tr>
             );
           })}
         </tbody>
       </table>
       <div className={classes.footer}>
-        <i className={`fa-solid fa-angles-down"}`}></i>
+        <i
+          onClick={moreViewClickHandler}
+          className={`fa-solid fa-angles-${moreView ? "up" : "down"}`}
+        ></i>
       </div>
     </>
   );

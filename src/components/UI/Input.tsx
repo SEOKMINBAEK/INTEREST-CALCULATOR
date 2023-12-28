@@ -1,4 +1,9 @@
-import { validateInputValue } from "../../util/util";
+import {
+  validateInputValue,
+  convertKoreanUnit,
+  addComma,
+  removeComma,
+} from "../../util/util";
 
 import classes from "./Input.module.css";
 
@@ -13,18 +18,20 @@ interface PropsShape {
 
 const Input = ({ title, id, value, unit, options, onChange }: PropsShape) => {
   const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const formatToNumber = e.target.value;
-    const isValid = validateInputValue(formatToNumber, id);
+    const newValue =
+      id === "amount" ? removeComma(e.target.value) : e.target.value;
+    const isValid = validateInputValue(newValue, id);
 
-    isValid && onChange(formatToNumber);
+    isValid && onChange(newValue);
   };
 
   const onClickHandler = (optionValue: number) => {
     if (optionValue === 0) {
-      onChange("0");
+      onChange("");
     } else {
       const newValue = +value + optionValue;
-      onChange(newValue + "");
+      const isValid = validateInputValue(newValue + "", id);
+      isValid && onChange(newValue + "");
     }
   };
 
@@ -38,11 +45,17 @@ const Input = ({ title, id, value, unit, options, onChange }: PropsShape) => {
           id={id}
           className={classes.input}
           type="text"
-          value={value}
+          value={id === "amount" ? addComma(value) : value}
           onChange={onChangeHandler}
         />
         <span className={classes.unit}>{unit}</span>
       </div>
+
+      {id === "amount" && +value > 0 && (
+        <p className={classes.convert}>
+          {convertKoreanUnit(removeComma(value))}
+        </p>
+      )}
 
       <ul className={classes.options}>
         {options.map((option) => (
