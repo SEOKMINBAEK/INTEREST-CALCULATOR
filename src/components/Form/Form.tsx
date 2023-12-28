@@ -1,6 +1,10 @@
+import { useContext } from "react";
+
 import Select from "../UI/Select";
 import Input from "../UI/Input";
 import Button from "../UI/Button";
+
+import CalculatorContext from "../../store/calculator-context";
 
 import classes from "./Form.module.css";
 
@@ -11,23 +15,36 @@ import {
   termBtnOptions,
 } from "../../data/form-options";
 
-interface Props {
-  repayWay: string;
-  amount: number;
-  yearlyInterest: number;
-  repayTerm: number;
-}
+const Form = () => {
+  const calcCtx = useContext(CalculatorContext);
 
-const Form = ({ repayWay, amount, yearlyInterest, repayTerm }: Props) => {
+  const {
+    repayWay,
+    amount,
+    yearlyInterest,
+    repayTerm,
+    inputDataIsValid,
+    changeRepayWay,
+    changeAmount,
+    changeYearlyInterest,
+    changeRepayTerm,
+  } = calcCtx;
+
   return (
     <form className={classes.form}>
-      <Select title="상환방식" value={repayWay} options={repayWayOptions} />
+      <Select
+        title="상환방식"
+        value={repayWay}
+        options={repayWayOptions}
+        onChange={changeRepayWay}
+      />
       <Input
         title="대출금액"
         id="amount"
         unit="원"
         value={amount}
         options={amountBtnOptions}
+        onChange={changeAmount}
       />
       <Input
         title="연 이자율"
@@ -35,6 +52,7 @@ const Form = ({ repayWay, amount, yearlyInterest, repayTerm }: Props) => {
         unit="%"
         value={yearlyInterest}
         options={interestBtnOptions}
+        onChange={changeYearlyInterest}
       />
       <Input
         title="상환기간"
@@ -42,8 +60,9 @@ const Form = ({ repayWay, amount, yearlyInterest, repayTerm }: Props) => {
         unit="년"
         value={repayTerm}
         options={termBtnOptions}
+        onChange={changeRepayTerm}
       />
-      <Button />
+      <Button disabled={inputDataIsValid} />
     </form>
   );
 };

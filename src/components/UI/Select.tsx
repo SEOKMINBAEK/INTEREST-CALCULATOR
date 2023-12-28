@@ -1,21 +1,31 @@
 import classes from "./Select.module.css";
 
-interface Props {
+interface PropsShape {
   title: string;
   value: string;
   options: string[];
+  onChange: (value: string) => void;
 }
 
-const Select = ({ title, value, options }: Props) => {
+const Select = ({ title, value, options, onChange }: PropsShape) => {
+  const onChangeHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    onChange(e.target.value);
+  };
+
   return (
     <div className={classes.wrapper}>
       <label className={classes.label} htmlFor="select">
         {title}
       </label>
       <div className={classes.box}>
-        <select id="select" className={classes.select} value={value}>
+        <select
+          id="select"
+          className={classes.select}
+          value={value}
+          onChange={onChangeHandler}
+        >
           {options.map((option) => (
-            <option>{option}</option>
+            <option key={option}>{option}</option>
           ))}
         </select>
 

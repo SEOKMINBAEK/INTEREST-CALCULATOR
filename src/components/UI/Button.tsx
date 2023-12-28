@@ -1,9 +1,15 @@
 import classes from "./Button.module.css";
 
-const Button = () => {
+interface PropsShape {
+  disabled: boolean;
+}
+
+const Button = ({ disabled }: PropsShape) => {
   return (
     <div className={classes.wrapper}>
-      <button className={classes.button}>계산하기</button>
+      <button disabled={!disabled} className={classes.button}>
+        계산하기
+      </button>
     </div>
   );
 };
